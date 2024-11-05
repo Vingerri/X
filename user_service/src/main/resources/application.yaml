@@ -1,0 +1,84 @@
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: user
+    password: password
+
+  task:
+    execution:
+      pool:
+        core-size: 10
+        max-size: 50
+        queue-capacity: 100
+      thread-name-prefix: Async-
+
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.yaml
+
+  data:
+    redis:
+      port: 6379
+      host: localhost
+      channels:
+        follower_view:
+          name: follower_view_channel
+        profile_view:
+          name: profile_view_channel
+        mentorship_requests:
+          name: mentorship_requests
+        goal_channel:
+          name: goal_channel
+
+  mvc:
+    servlet:
+      path: /api
+
+server:
+  port: 8080
+
+logging:
+  level:
+    root: info
+
+project-service:
+  host: localhost
+  port: 8082
+
+payment-service:
+  host: localhost
+  port: 9080
+
+aws:
+  accessKey: accessKey
+  secretKey: secretKey
+  region: region
+
+services:
+  s3:
+    endpoint: http://192.168.1.100:9000
+    accessKey: user
+    secretKey: password
+    bucket-name: user-backet
+    isMocked: true
+
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+
+
+scheduler:
+  clear-events:
+    cron: "0 0 0 * * SUN"
+    chunk-size: 10
